@@ -8,11 +8,11 @@ const {
     updateUserInfo,
 } = require('../controllers/userController');
 
-router.post('/signup', signup);
-router.post('/signin', signin);
-router.delete('/signout', signout);
-router.get('/userinfo', getUserInfo);
-router.patch('/userinfo', updateUserInfo);
-router.delete('/userinfo', deleteUserInfo);
+router.post('/', signup);
+router.post('/', signin);
+router.delete('/', signout);
+router.get('/', getUserInfo);
+router.patch('/', updateUserInfo);
+router.delete('/', deleteUserInfo);
 
 module.exports = router;
