@@ -1,12 +1,18 @@
 const router = require('express').Router();
 const {
-  deleteUserAccount,
-  getUserUserInfo,
-  updateUserInfo,
-} = require('../controllers/users');
+    signup,
+    signin,
+    signout,
+    deleteUserInfo,
+    getUserInfo,
+    updateUserInfo,
+} = require('../controllers/userController');
 
-router.get('/userinfo', getUserUserInfo);
+router.post('/signup', signup);
+router.post('/signin', signin);
+router.delete('/signout', signout);
+router.get('/userinfo', getUserInfo);
 router.patch('/userinfo', updateUserInfo);
-router.delete('/userinfo', deleteUserAccount);
+router.delete('/userinfo', deleteUserInfo);
 
 module.exports = router;

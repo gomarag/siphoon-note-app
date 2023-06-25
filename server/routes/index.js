@@ -3,24 +3,23 @@ const router = express.Router();
 const logger = require('../middlewares/logger');
 
 // 1. landing
-router.get('/', require('./landing'));
+// router.get('/', require('./landing'));
 
-// 2. auth: signin, signup, signout
-router.use(`/signup`, require('./auth'));
-router.use(`/signin`, require('./auth'));
-router.use(`/signout`, require('./auth'));
-
-// 3. essay
-router.use(`/essays`, require('./essay'));
-
-// 4. trash
-router.use(`/trashes`, require('./trash'));
-
-// 5. user
+router.use(`/signup`, require('./user'));
+router.use(`/signin`, require('./user'));
+router.use(`/signout`, require('./user'));
 router.use(`/usersinfo`, require('./user'));
 
-// 6. tag
-router.use(`/tags`, require('./tag'));
+// 3. essay
+// router.use(`/essays`, require('./essay'));
+
+// // 4. trash
+// router.use(`/trashes`, require('./trash'));
+
+// // 5. user
+
+// // 6. tag
+// router.use(`/tags`, require('./tag'));
 
 router.use((req, res, next) => {
   const err = new Error(`😈 ${req.method} ${req.url} Router Not Found 😈`);
