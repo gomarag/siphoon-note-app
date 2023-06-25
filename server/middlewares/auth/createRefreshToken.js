@@ -4,7 +4,7 @@ const expiresIn = process.env.REF_EXPIRED_IN;
 
 // user는 객체로 회원의 정보를 담는 객체
 // ! user의 유효성 검사가 필요함
-const refreshToken = (accountInfoForToken = {}) => {
+const createRefreshToken = (accountInfoForToken = {}) => {
   const { email, username, profileImage /*uuid,*/ } = accountInfoForToken;
   const payload = {
     email,
@@ -14,4 +14,4 @@ const refreshToken = (accountInfoForToken = {}) => {
   return jwt.sign(payload, secretKey, { expiresIn });
 };
 
-module.exports = { refreshToken };
+module.exports = { createRefreshToken };
