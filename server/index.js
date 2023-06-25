@@ -6,7 +6,8 @@ const https = require('https');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-const port = process.env.HTTPS_PORT || 5500;
+// const port = process.env.HTTPS_PORT || 5500;
+const port = process.env.HTTPS_PORT || process.env.HTTP_PORT;
 
 const express = require('express');
 const app = express();
@@ -25,15 +26,17 @@ app.use(
 
 app.use(require('./routes'));
 
-const credentials = {
-  key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
-};
+// ssl 설정이 되어있는 도메인이라 따로 key, cert 필요없지 않을까
+// const credentials = {
+//   key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+//   cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
+// };
 
-const secureServer = https.createServer(credentials, app);
+// const secureServer = https.createServer(credentials, app);
+const server = https.createServer(app);
 
-secureServer.listen(port, () => {
-  logger.info(`Secure Server on ${port}!🚀`);
+server.listen(port, () => {
+  logger.info(`Server on ${port}!🚀`);
 });
 
-module.exports = secureServer;
+module.exports = server;
