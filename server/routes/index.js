@@ -18,6 +18,6 @@ router.post('/signin', signin);
 // router.delete('/', deleteUserInfo);
 
 
-// router.use(`/essays`, require('./essay'));
+router.post(`/essays`, createEssay);
 
 module.exports = router;
