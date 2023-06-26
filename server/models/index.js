@@ -9,9 +9,11 @@ const sequelize = new Sequelize(
   config.database,
   config.username,
   config.password,
-  config.host,
-  config.port,
-  config.dialect
+  {
+    host: config.host,
+    port: config.port,
+    dialect: 'mysql',
+  }
 );
 
 db.sequelize = sequelize;

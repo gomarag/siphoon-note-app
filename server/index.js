@@ -1,13 +1,19 @@
 require('dotenv').config();
 const logger = require('./middlewares/logger');
-const path = require('path');
-const fs = require('fs');
 const https = require('https');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { sequelize } = require('./models');
 
-// const port = process.env.HTTPS_PORT || 5500;
 const port = process.env.HTTPS_PORT || process.env.HTTP_PORT;
+
+sequelize.sync({ force: false })
+  .then(() => {
+    logger.info('데이터베이스 연결 성공');
+  })
+  .catch((err) => {
+    logger.error(err);
+  });
 
 const express = require('express');
 const app = express();
@@ -18,7 +24,8 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: process.env.ORIGIN_URL,
+    // origin: process.env.ORIGIN_URL,
+    origin: 'http://localhost:3000',
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'OPTIONS', 'DELETE'],
   })
