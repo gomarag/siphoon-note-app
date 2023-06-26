@@ -40,4 +40,40 @@ module.exports = {
             res.status(500).json({ message: 'Internal server error' });
         }
     },
+    signin: async (req, res) => {
+        try {
+            const { email, password } = req.body;
+
+            const user = await User.findOne({ where: { email } });
+            
+            if (!user) {
+                logger.info('User not found');
+                return res.status(404).json({ message: 'User not found' });
+            }
+            bcrypt.compare(password, user.password)
+                .then(isMatch => {
+                if (!isMatch) {
+                    return res.status(401).json({ error: 'Incorrect password' });
+                }
+
+                const newAccessToken = jwt.sign({ email }, 'yourSecretKey', { expiresIn: '1h' });
+
+                res.status(200).json({
+                    accessToken: newAccessToken,
+                    email: user.email,
+                    username: user.name,
+                    profileImage: user.profile_image,
+                    gender: user.gender,
+                    birthday: user.birthday,
+                    region: user.region,
+                });
+            }).catch(error => {
+                logger.error(error);
+                res.status(500).json({ error: 'Server failed to decode password!' });
+            });
+        } catch (error) {
+            logger.error(error.message);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
 };
