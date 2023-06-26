@@ -1,11 +1,8 @@
-require('dotenv').config();
-const logger = require('./middlewares/logger');
-const https = require('https');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
+const express = require('express');
 const { sequelize } = require('./models');
-
-const port = process.env.HTTPS_PORT || process.env.HTTP_PORT;
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const logger = require('./middlewares/logger');
 
 sequelize.sync({ force: false })
   .then(() => {
@@ -15,35 +12,32 @@ sequelize.sync({ force: false })
     logger.error(err);
   });
 
-const express = require('express');
 const app = express();
+const port = 9000;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
-app.use(
-  cors({
+app.use(cors(
+  {
     // origin: process.env.ORIGIN_URL,
     origin: 'http://localhost:3000',
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'OPTIONS', 'DELETE'],
-  })
-);
+  }
+));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use(require('./routes'));
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+app.use('/', require('./routes'));
 
-// ssl 설정이 되어있는 도메인이라 따로 key, cert 필요없지 않을까
-// const credentials = {
-//   key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-//   cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
-// };
-
-// const secureServer = https.createServer(credentials, app);
-const server = https.createServer(app);
-
-server.listen(port, () => {
-  logger.info(`Server on ${port}!🚀`);
+app.use((err, req, res, next) => {
+  logger.info(req.method, req.url);
+  logger.error(err.status, err.message);
+  res.status(err.status).send(err.message);
+  next();
 });
 
-module.exports = server;
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
