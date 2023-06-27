@@ -1,44 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const logger = require('../middlewares/logger');
 
+const { signup, signin, signout,
+    // deleteUserInfo,
+    // getUserInfo,
+    // updateUserInfo,
+} = require('../controllers/userController');
+const { createEssay, getEssayList } = require('../controllers/essayController');
 // 1. landing
-router.get('/', require('./landing'));
+router.get('/', require('../controllers/homeController'));
+// router.get('/', (req, res) => {
+//     res.status(200).send('Hello, World!');
+// });
 
-// 2. auth: signin, signup, signout
-router.use(`/signup`, require('./auth'));
-router.use(`/signin`, require('./auth'));
-router.use(`/signout`, require('./auth'));
+router.post('/signup', signup);
+router.post('/signin', signin);
+router.post('/signout', signout);
+// router.patch('/', updateUserInfo);
+// router.delete('/', deleteUserInfo);
 
-// 3. essay
-router.use(`/essays`, require('./essay'));
 
-// 4. trash
-router.use(`/trashes`, require('./trash'));
-
-// 5. user
-router.use(`/usersinfo`, require('./user'));
-
-// 6. tag
-router.use(`/tags`, require('./tag'));
-
-router.use((req, res, next) => {
-  const err = new Error(`😈 ${req.method} ${req.url} Router Not Found 😈`);
-
-  logger.error(err);
-
-  err.status = 404;
-  next(err);
-});
-
-router.use((err, req, res, next) => {
-  logger.error(err);
-
-  res.status(err.status || 500);
-  res.json({
-    message: err.message,
-    error: err,
-  });
-});
+router.post(`/essays`, createEssay);
+router.get(`/essays`, getEssayList);
 
 module.exports = router;
