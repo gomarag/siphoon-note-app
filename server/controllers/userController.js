@@ -36,7 +36,7 @@ module.exports = {
                 updatedAt: new Date()
             });
             logger.log('info', 'User created successfully');
-            res.set('Authorization', accessToken);
+            // res.set('Authorization', accessToken);
             res.status(201).json({ accessToken, message: 'User created successfully' });
         } catch (error) {
             logger.error(error.message);
@@ -63,9 +63,10 @@ module.exports = {
                 const newAccessToken = jwt.sign({ email, user_id: user.id }, process.env.ACC_TOKEN_SECRET, { expiresIn: '1h' });
 
                 // 클라이언트는 로그아웃 전까지 액세스 토큰을 보관
-                res.setHeader('Access-Control-Expose-Headers', 'Authorization');
-                res.set('Authorization', newAccessToken);
+                // res.setHeader('Access-Control-Expose-Headers', 'Authorization');
+                // res.set('Authorization', newAccessToken);
                 res.status(200).json({
+                    accessToken: newAccessToken,
                     email: user.email,
                     username: user.name,
                     profileImage: user.profile_image,
