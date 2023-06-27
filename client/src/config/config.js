@@ -1,7 +1,12 @@
 // SWAGGER API DOCUMENTATION: https://app.swaggerhub.com/apis/gomarag/Diary/1.0.2-oas3
+// require('dotenv').config();
 
-const SERVER_HOST =
-  'https://alb-tokyo-5639828.ap-northeast-1.elb.amazonaws.com';
+// const env = process.env.NODE_ENV;
+// const SERVER_HOST = (env === 'production')
+//   ? process.env.PROD_HOST
+//   : process.env.DEV_HOST;
+
+const SERVER_HOST = 'http://localhost:9000';
 
 const apiUris = {
   //------------- 1. main -------------

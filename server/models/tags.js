@@ -14,6 +14,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'tags',
+    modelName: 'Tag',
     timestamps: false,
     indexes: [
       {

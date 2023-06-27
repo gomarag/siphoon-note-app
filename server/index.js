@@ -1,39 +1,44 @@
-require('dotenv').config();
-const logger = require('./middlewares/logger');
-const path = require('path');
-const fs = require('fs');
-const https = require('https');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-
-const port = process.env.HTTPS_PORT || 5500;
-
 const express = require('express');
+const { sequelize } = require('./models');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const logger = require('./middlewares/logger');
+const env = process.env.NODE_ENV;
+
+logger.debug('Program started with NODE_ENV: ', env);
+
+sequelize.sync({ force: false })
+  .then(() => {
+    logger.debug('Database connection success!');
+  })
+  .catch((err) => {
+    logger.error(err);
+  });
+
 const app = express();
+const port = 9000;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
-app.use(
-  cors({
-    origin: process.env.ORIGIN_URL,
+app.use(cors(
+  {
+    origin: (env === 'production')
+      ? process.env.ORIGIN_URL
+      : process.env.TEST_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'OPTIONS', 'DELETE'],
-  })
-);
+  }
+));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use(require('./routes'));
+app.use('/', require('./routes'));
 
-const credentials = {
-  key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
-};
-
-const secureServer = https.createServer(credentials, app);
-
-secureServer.listen(port, () => {
-  logger.info(`Secure Server on ${port}!🚀`);
+app.use((err, req, res, next) => {
+  logger.info(req.method, req.url);
+  logger.error(err.status, err.message);
+  res.status(err.status).send(err.message);
+  next();
 });
 
-module.exports = secureServer;
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});

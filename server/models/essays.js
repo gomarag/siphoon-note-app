@@ -32,6 +32,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'essays',
+    modelName: 'Essay',
     timestamps: true,
     indexes: [
       {
@@ -43,15 +44,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "id_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
-        name: "fk_users_essays",
+        name: "user_id",
         using: "BTREE",
         fields: [
           { name: "user_id" },
