@@ -48,21 +48,21 @@ export default function Landing({ isLogin, setKeyword }) {
   const [publicEssay, setPublicEssay] = useState(dummy);
 
   //! 랜딩 페이지 서버 요청
-  axios
-    .get(apiUris.LOAD_LANDING, {
-      headers: {
-        authorization: { 'Content-Type': 'application/json' },
-      },
-    })
-    .then(res => {
-      if (res.status === 200) {
-        const { keyword, userList, publicEssayList } = res.data;
-        setTopUser(userList);
-        setPublicEssay(publicEssayList);
-        setKeyword(keyword);
-      }
-    })
-    .catch(err => console.log(err));
+  // axios
+  //   .get(apiUris.LOAD_LANDING, {
+  //     headers: {
+  //       authorization: { 'Content-Type': 'application/json' },
+  //     },
+  //   })
+  //   .then(res => {
+  //     if (res.status === 200) {
+  //       const { keyword, userList, publicEssayList } = res.data;
+  //       setTopUser(userList);
+  //       setPublicEssay(publicEssayList);
+  //       setKeyword(keyword);
+  //     }
+  //   })
+  //   .catch(err => console.log(err));
 
   // 상단으로 올라가기 버튼 구현
   const [ScrollY, setScrollY] = useState(0);

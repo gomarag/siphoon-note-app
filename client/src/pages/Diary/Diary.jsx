@@ -108,53 +108,53 @@ export default function Diary({ userInfo, setUserInfo, keyword, setKeyword }) {
   //! get 요청해서 에세이 리스트만 갱신하는 핸들러
   // 휴지통, 태그, 검색어 컴포넌트에서 전체 에세이 리스트를 다시 받아올 때 적용 (고민)
   const readHandler = () => {
-    axios
-      .get(apiUris.READ_ESSAY_LIST)
-      .then(res => {
-        if (res.status === 200) {
-          //* 에세이 리스트 받아오는 코드
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        if (err.status === 401) {
-          alert('로그인이 필요합니다.');
-          return navigator('/signin', { replace: true });
-        }
-        if (err.status === 500) {
-          return alert(err.message);
-        }
-      });
+    // axios
+    //   .get(apiUris.READ_ESSAY_LIST)
+    //   .then(res => {
+    //     if (res.status === 200) {
+    //       //* 에세이 리스트 받아오는 코드
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     if (err.status === 401) {
+    //       alert('로그인이 필요합니다.');
+    //       return navigator('/signin', { replace: true });
+    //     }
+    //     if (err.status === 500) {
+    //       return alert(err.message);
+    //     }
+    //   });
   };
 
   //! get 요청 : 글 리스트, 분석데이터, 유저정보, 키워드(토큰필요)
-  axios
-    .get(apiUris.READ_ESSAY_LIST)
-    .then(res => {
-      if (res.status === 200) {
-        const { todaysWord, record, markList, userInfo } = res.data;
-        //* 에세이 리스트
-        // 코드작성 (종열)
-        //* 유저정보
-        // 코드작성 (준형)
-        //* 키워드, 분석, 달력
-        setUserInfo(userInfo);
-        setKeyword(todaysWord);
+  // axios
+  //   .get(apiUris.READ_ESSAY_LIST)
+  //   .then(res => {
+  //     if (res.status === 200) {
+  //       const { todaysWord, record, markList, userInfo } = res.data;
+  //       //* 에세이 리스트
+  //       // 코드작성 (종열)
+  //       //* 유저정보
+  //       // 코드작성 (준형)
+  //       //* 키워드, 분석, 달력
+  //       setUserInfo(userInfo);
+  //       setKeyword(todaysWord);
 
-        setRecord(record);
-        setMarkList(markList);
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      if (err.status === 401) {
-        alert('로그인이 필요합니다.');
-        return navigator('/signin', { replace: true });
-      }
-      if (err.status === 500) {
-        return alert(err.message);
-      }
-    });
+  //       setRecord(record);
+  //       setMarkList(markList);
+  //     }
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     if (err.status === 401) {
+  //       alert('로그인이 필요합니다.');
+  //       return navigator('/signin', { replace: true });
+  //     }
+  //     if (err.status === 500) {
+  //       return alert(err.message);
+  //     }
+  //   });
 
   //! 서버에 글 작성 요청 보내기 (토큰필요)
   const handleSubmit = () => {
