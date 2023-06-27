@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.TOKEN_SECRET;
-const logger = require('../../middlewares/logger');
+const secretKey = process.env.ACC_TOKEN_SECRET;
+const logger = require('./logger');
 
 const tokenValidator = async (token = '') => {
   logger.debug('tokenValidator', token);
