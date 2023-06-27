@@ -3,10 +3,13 @@ const { sequelize } = require('./models');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('./middlewares/logger');
+const env = process.env.NODE_ENV;
+
+logger.debug('Program started with NODE_ENV: ', env);
 
 sequelize.sync({ force: false })
   .then(() => {
-    logger.info('데이터베이스 연결 성공');
+    logger.debug('Database connection success!');
   })
   .catch((err) => {
     logger.error(err);
@@ -17,8 +20,9 @@ const port = 9000;
 
 app.use(cors(
   {
-    // origin: process.env.ORIGIN_URL,
-    origin: 'http://localhost:3000',
+    origin: (env === 'production')
+      ? process.env.ORIGIN_URL
+      : process.env.TEST_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'OPTIONS', 'DELETE'],
   }
