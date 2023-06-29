@@ -1,6 +1,6 @@
 'use strict';
 require('dotenv').config();
-
+const logger = require('../middlewares/logger');
 const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV;
 const config = require('../config/config')[env];
@@ -16,6 +16,7 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
   }
 );
+logger.debug(sequelize.config);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
