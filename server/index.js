@@ -40,6 +40,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on ${process.env.PROD_HOST || process.env.DEV_HOST}:${port}`);
-});
+const server = app.listen();
+const address = server.address();
+logger.debug('Server is on ', address);
