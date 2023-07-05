@@ -107,8 +107,6 @@ export default function Landing({ isLogin, setKeyword }) {
     rotate: 360,
   });
 
-  console.log(apiUris.LOAD_LANDING);
-
   return (
     <>
       <Container>

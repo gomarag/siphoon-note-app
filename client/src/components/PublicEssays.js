@@ -7,7 +7,6 @@ import { useState } from 'react';
 import PublicEntireEssay from './PublicEntireEssay';
 
 export default function PublicEssays({ publicEssay }) {
-  console.log('rendenred?');
   const length = publicEssay.length;
   const [current, setCurrent] = useState(0);
   const nextSlide = () => {

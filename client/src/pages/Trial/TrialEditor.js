@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function TrialEditor({ handleEditor, diary, number }) {
   const [input, setInput] = useState(diary.content);
-  console.log(input);
+  // console.log(input);
   const handleChange = e => {
     setInput(e.target.value);
   };
