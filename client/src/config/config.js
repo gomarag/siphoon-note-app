@@ -6,7 +6,10 @@
 //   ? process.env.PROD_HOST
 //   : process.env.DEV_HOST;
 
-const SERVER_HOST = 'http://localhost:9000';
+// const SERVER_HOST = 'http://localhost:9000';
+
+const SERVER_HOST =
+  'https://ec2-43-201-105-30.ap-northeast-2.compute.amazonaws.com';
 
 const apiUris = {
   //------------- 1. main -------------

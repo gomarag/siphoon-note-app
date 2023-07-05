@@ -3,7 +3,8 @@ const { sequelize } = require('./models');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('./middlewares/logger');
-const env = process.env.NODE_ENV;
+const { development } = require('./config/config');
+const env = process.env.NODE_ENV || development;
 
 logger.debug('Program started with NODE_ENV: ', env);
 
@@ -16,7 +17,7 @@ sequelize.sync({ force: false })
   });
 
 const app = express();
-const port = 9000;
+const port = (env === 'production') ? process.env.HTTPS_PORT : process.env.HTTP_PORT;
 
 app.use(cors(
   {
@@ -39,6 +40,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+const server = app.listen();
+const address = server.address();
+logger.debug('Server is on ', address);
