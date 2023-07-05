@@ -7,7 +7,7 @@
 > 📔️ **프로젝트 형태** :부트캠프 파이널 프로젝트
 > 
 
-> 🌐 **배포 링크 : [📝️](http://dev-diary-bucket.s3-website.ap-northeast-2.amazonaws.com/)**[Siphoon Note로 접속하기](https://www.siphoon-note.ml/)
+> 🌐 **배포 링크 : [📝️](http://dev-diary-bucket.s3-website.ap-northeast-2.amazonaws.com/)**[Siphoon Note로 접속하기](https://www.siphoon-note.app/)
 > 
 
 > 👀️ **기획의도** : 글쓰기가 좋은 건 알겠는데, 긴 글을 쓰는 것이 부담스러워 시작이 어려운 사람들을 위한 10분 타이머 노트.
