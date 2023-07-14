@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { User } = require('../models')
 const logger = require('../middlewares/logger');
 const { tokenValidator } = require('../middlewares/tokenValidator');
 require('dotenv').config();

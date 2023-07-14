@@ -1,4 +1,3 @@
-const { Essay } = require('../models');
 const logger = require('../middlewares/logger');
 const { tokenValidator } = require('../middlewares/tokenValidator');
 

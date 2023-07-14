@@ -1,11 +1,3 @@
-const { Essay, Tags, Essay_Tag }  = require('../models');
-// const {
-//   getEssayListByPagination,
-//   findAllCreatedAt,
-// } = require('../models/model.essays');
-// const { getInspiration } = require('../models/model.inspirations');
-// const { getUserRecordById } = require('../models/model.records');
-// const { getTagListByEssayId } = require('../models/model.tags');
 const { tokenValidator } = require('../middlewares/auth');
 const {
   successResponse,
