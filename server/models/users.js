@@ -1,77 +1,52 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('users', {
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    refresh_token: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      unique: "email_UNIQUE"
-    },
-    name: {
-      type: DataTypes.STRING(45),
-      allowNull: false
-    },
-    password: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    gender: {
-      type: DataTypes.STRING(55),
-      allowNull: true,
-      defaultValue: "응답 하지 않음"
-    },
-    birthday: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    region: {
-      type: DataTypes.STRING(45),
-      allowNull: true
-    },
-    profile_image: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'users',
-    modelName: 'User',
-    timestamps: true,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
-        name: "email",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "email" },
-        ]
-      },
-      {
-        name: "email_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "email" },
-        ]
-      },
-    ]
-  });
-};
+const { DataTypes } = require('sequelize');
+const sequelize = require('../models');
+
+const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  gender: {
+    type: DataTypes.STRING,
+    defaultValue: null
+  },
+  location: {
+    type: DataTypes.STRING,
+    defaultValue: null
+  },
+  birthday: {
+    type: DataTypes.DATE,
+    defaultValue: null
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  profile_image: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  }
+}, {
+  tableName: 'user',
+  timestamps: false
+});
+
+module.exports = User;

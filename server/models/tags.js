@@ -1,30 +1,19 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('tags', {
+const { DataTypes } = require('sequelize');
+const sequelize = require('../models');
+
+const Tag = sequelize.define('Tag', {
     id: {
-      autoIncrement: true,
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     tag_name: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.STRING,
       allowNull: false
     }
   }, {
-    sequelize,
-    tableName: 'tags',
-    modelName: 'Tag',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
+    tableName: 'tag',
+    timestamps: false
   });
-};
+
+module.exports = Tag;
