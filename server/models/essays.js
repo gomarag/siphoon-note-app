@@ -1,39 +1,55 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../models');
-
-const Essay = sequelize.define('Essay', {
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('essays', {
     id: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     content: {
       type: DataTypes.TEXT,
-      defaultValue: null
+      allowNull: false
     },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     is_deleted: {
       type: DataTypes.TINYINT,
+      allowNull: false,
       defaultValue: 0
     },
     is_public: {
       type: DataTypes.TINYINT,
+      allowNull: false,
       defaultValue: 0
     }
   }, {
-    tableName: 'essay',
-    timestamps: false
+    sequelize,
+    tableName: 'essays',
+    modelName: 'Essay',
+    timestamps: true,
+    indexes: [
+      {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "id" },
+        ]
+      },
+      {
+        name: "user_id",
+        using: "BTREE",
+        fields: [
+          { name: "user_id" },
+        ]
+      },
+    ]
   });
-
-  module.exports = Essay;
+};

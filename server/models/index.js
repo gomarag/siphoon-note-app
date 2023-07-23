@@ -16,6 +16,7 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
   }
 );
+logger.debug(sequelize.config);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
@@ -23,13 +24,5 @@ db.Sequelize = Sequelize;
 db.User = require('./users')(sequelize, Sequelize);
 db.Essay = require('./essays')(sequelize, Sequelize);
 db.Tag = require('./tags')(sequelize, Sequelize);
-db.EssayTag = require('./essay_tags')(sequelize, Sequelize);
 
-User.hasMany(Essay, { foreignKey: 'user_id' });
-Essay.belongsTo(User, { foreignKey: 'user_id' });
-Essay.belongsToMany(Tag, { through: EssayTag, foreignKey: 'essay_id' });
-Tag.belongsToMany(Essay, { through: EssayTag, foreignKey: 'tag_id' });
-
-module.exports = { User, Essay, Tag, EssayTag };
-
-// module.exports = db;
+module.exports = db;
